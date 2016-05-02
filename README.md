@@ -17,3 +17,5 @@ docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt \
   -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
   quay.io/letsencrypt/letsencrypt:latest auth
 ```
+
+Then move the certificates created in /etc/letsencrypt/live (follow any symlinks) to the certs folder and rename as specified above.
