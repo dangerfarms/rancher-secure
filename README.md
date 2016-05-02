@@ -1,13 +1,13 @@
 # rancher-secure
 Rancher server served behind an nginx container only available on HTTPS
 
-# Usage
+## Usage
 
 1. Add SSL certificates key.pem and cert.pem to certs/ (which should be the full chained certificate including authority certificate)
 2. Edit `server_name` in conf/default.conf to listen on the correct hostname.
 3. Run `docker-compose up` with optional `-d`
 
-# Additional Info
+## Additional Info
 
 You can create free SSL certificates now using the letsencrypt service. To do so, run the below command:
 
