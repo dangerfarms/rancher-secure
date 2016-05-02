@@ -1,0 +1,13 @@
+nginx:
+  image: nginx
+  volumes:
+  - ./certs:/etc/ssl/certs
+  - ./conf.d:/etc/nginx/conf.d
+  ports:
+  - 80:80
+  - 443:443
+  links:
+  - rancher-server
+rancher-server:
+  image: rancher/server
+  restart: always
