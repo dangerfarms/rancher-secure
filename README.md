@@ -9,10 +9,22 @@ Rancher server served behind an nginx container only available on HTTPS
 
 ## Additional Info
 
-You can create free SSL certificates now using the letsencrypt service. To do so, run the below command:
+You can create free SSL certificates now using the letsencrypt service. To do so, run the below commands. You'll be
+asked to create certificates for a list of hostnames, you must ensure that DNS records have been set up that point to
+the machine you are creating the certificates on.
 
 ```
-docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt:latest auth
-```
+DOMAIN=[whatever domain you are creating a certificate for]
+docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt -v "$(pwd)/letsencrypt/etc:/etc/letsencrypt" -v "$(pwd)/letsencrypt/var/lib/:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt:latest auth
+chown -R $USER:$USER letsencrypt;
+mkdir -p letsencrypt;
+cp letsencrypt/etc/archive/$DOMAIN/privkey1.pem certs/key.pem;
+cp letsencrypt/etc/archive/$DOMAIN/fullchain1.pem certs/cert.pem;
 
-Then move the certificates created in /etc/letsencrypt/live (follow any symlinks) to the certs folder and rename as specified above.
+# You are then free to remove the letsencrypt directory
+rm -rf letsencrypt;
+
+# Replace nginx conf
+sed -i.bak -e "s/{HOSTNAME}/$DOMAIN/g" conf.d/default.conf;
+rm conf.d/default.conf.bak;
+```
