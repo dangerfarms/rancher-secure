@@ -24,7 +24,7 @@ cp letsencrypt/etc/archive/$DOMAIN/fullchain1.pem certs/cert.pem;
 # You are then free to remove the letsencrypt directory
 rm -rf letsencrypt;
 
-# Replace nginx conf
+# Replace hostname (optional step if not done before)
 sed -i.bak -e "s/{HOSTNAME}/$DOMAIN/g" conf.d/default.conf;
 rm conf.d/default.conf.bak;
 ```
