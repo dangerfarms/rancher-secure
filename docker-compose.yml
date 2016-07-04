@@ -9,5 +9,9 @@ nginx:
   links:
   - rancher-server
 rancher-server:
-  image: rancher/server
+  image: rancher/server:latest
   restart: always
+  volumes_from:
+  - rancher-data
+rancher-data:
+  image: rancher/server:latest
