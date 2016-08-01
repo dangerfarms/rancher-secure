@@ -17,7 +17,11 @@ Use the temporary webserver and follow the instructions.
 
 ```
 DOMAIN=[whatever domain you are creating a certificate for]
-docker run -it --rm -p 443:443 -p 80:80 --name letsencrypt -v "$(pwd)/letsencrypt/etc:/etc/letsencrypt" -v "$(pwd)/letsencrypt/var/lib/:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt:latest auth
+docker run -it --rm -p 443:443 -p 80:80 \
+  --name certbot \
+  -v "$(pwd)/letsencrypt/etc:/etc/letsencrypt" \
+  -v "$(pwd)/letsencrypt/var/lib/:/var/lib/letsencrypt" \
+  quay.io/letsencrypt/letsencrypt:latest certonly;
 sudo chown -R $USER:$USER letsencrypt;
 mkdir -p certs;
 cp -L letsencrypt/etc/live/$DOMAIN/* certs/;
