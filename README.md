@@ -13,15 +13,15 @@ You can create free SSL certificates now using the letsencrypt service. To do so
 asked to create certificates for a list of hostnames, you must ensure that DNS records have been set up that point to
 the machine you are creating the certificates on.
 
-Use the temporary webserver and follow the instructions.
-
 ```
+# Stop any containers listening on port 80 or 443
 DOMAIN=[whatever domain you are creating a certificate for]
 docker run -it --rm -p 443:443 -p 80:80 \
   --name certbot \
   -v "$(pwd)/letsencrypt/etc:/etc/letsencrypt" \
   -v "$(pwd)/letsencrypt/var/lib/:/var/lib/letsencrypt" \
   quay.io/letsencrypt/letsencrypt:latest certonly;
+# Choose the 2nd option (temporary webserver)
 sudo chown -R $USER:$USER letsencrypt;
 mkdir -p certs;
 cp -L letsencrypt/etc/live/$DOMAIN/* certs/;
