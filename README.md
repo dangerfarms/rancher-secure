@@ -33,3 +33,14 @@ rm -rf letsencrypt;
 sed -i.bak -e "s/{HOSTNAME}/$DOMAIN/g" conf.d/default.conf;
 rm conf.d/default.conf.bak;
 ```
+
+## Upgrading
+
+First, if required, update the version number of rancher server in the docker-compose.yml file. Then run the following commands:
+
+```
+docker-compose stop; 
+docker-compose pull; 
+docker-compose rm nginx; 
+docker-compose up -d;
+```
