@@ -38,6 +38,8 @@ rm conf.d/default.conf.bak;
 
 First, if required, update the version number of rancher server in the docker-compose.yml file. Then run the following commands:
 
+Back up the DB before starting!
+
 ```
 docker-compose stop; 
 docker-compose pull; 
