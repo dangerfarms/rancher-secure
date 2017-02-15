@@ -9,9 +9,20 @@ nginx:
   links:
   - rancher-server
 rancher-server:
-  image: rancher/server:latest
-  restart: always
-  volumes_from:
-  - rancher-data
-rancher-data:
-  image: rancher/server:latest
+  image: rancher/server:stable
+  command: --db-host db
+  restart: unless-stopped
+  volumes:
+    - rancher-lib-cattle:/var/lib/cattle
+  links:
+    - db
+db:
+  image: mysql
+  volumes:
+    - rancher-lib-mysql:/var/lib/mysql
+    - rancher-log-mysql:/var/log/mysql
+  environment:
+    MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    MYSQL_DATABASE: cattle
+    MYSQL_USER: cattle
+    MYSQL_PASSWORD: cattle
